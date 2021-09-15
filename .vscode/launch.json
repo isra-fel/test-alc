@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/AppWithPlugin/bin/Debug/net5.0/AppWithPlugin.dll",
-            "args": [],
+            "args": ["hello"],
             "cwd": "${workspaceFolder}/AppWithPlugin",
             "console": "internalConsole",
             "stopAtEntry": false

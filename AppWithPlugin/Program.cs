@@ -1,9 +1,12 @@
-﻿using PluginBase;
+﻿using Newtonsoft.Json;
+using PluginBase;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Loader;
 
 namespace AppWithPlugin
 {
@@ -11,6 +14,8 @@ namespace AppWithPlugin
     {
         static void Main(string[] args)
         {
+            LoadNewtonSoftJson();
+
             try
             {
                 if (args.Length == 1 && args[0] == "/d")
@@ -65,6 +70,17 @@ namespace AppWithPlugin
             {
                 Console.WriteLine(ex);
             }
+        }
+
+        private static void LoadNewtonSoftJson()
+        {
+            object json = JsonConvert.DeserializeObject("{}");
+            Debug.Assert(json != null);
+            Assembly newtonsoftJson = AssemblyLoadContext.Default.Assemblies.First(
+                a => a.FullName.StartsWith("Newtonsoft.Json")
+            );
+            Debug.Assert(newtonsoftJson != null);
+            Console.WriteLine($"{newtonsoftJson.FullName} is loaded.");
         }
 
         static Assembly LoadPlugin(string relativePath)
